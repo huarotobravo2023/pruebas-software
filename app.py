@@ -66,7 +66,7 @@ def actualizar_nota(nota_id, titulo, contenido):
     conn.commit()
     conn.close()
 
-def eliminar_nota(nota_id):
+def eliminar_nota_db(nota_id):
     """Elimina una nota de la base de datos"""
     conn = get_db_connection()
     conn.execute('DELETE FROM notas WHERE id = ?', (nota_id,))
@@ -129,9 +129,9 @@ def editar_nota(nota_id):
     return render_template('editar_nota.html', nota=nota)
 
 @app.route('/eliminar/<int:nota_id>')
-def eliminar_nota_route(nota_id):
+def eliminar_nota(nota_id):
     """Eliminar una nota"""
-    eliminar_nota(nota_id)
+    eliminar_nota_db(nota_id)
     flash('Nota eliminada exitosamente!', 'success')
     return redirect(url_for('index'))
 
