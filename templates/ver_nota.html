@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ nota.titulo }} - Mis Notas{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 20px;">
+    <a href="{{ url_for('index') }}" class="btn" style="background-color: #6c757d; color: white;">⬅️ Volver</a>
+    <a href="{{ url_for('editar_nota', nota_id=nota.id) }}" class="btn btn-warning">✏️ Editar</a>
+    <a href="{{ url_for('eliminar_nota', nota_id=nota.id) }}" 
+       class="btn btn-danger" 
+       onclick="return confirm('¿Estás seguro de que quieres eliminar esta nota?')">🗑️ Eliminar</a>
+</div>
+
+<div class="nota-card">
+    <h2>{{ nota.titulo }}</h2>
+    <div class="nota-fecha">Creada: {{ nota.fecha }}</div>
+    {% if nota.fecha_modificacion %}
+    <div class="nota-fecha">Última modificación: {{ nota.fecha_modificacion }}</div>
+    {% endif %}
+    <hr>
+    <div style="white-space: pre-line; line-height: 1.6;">{{ nota.contenido }}</div>
+</div>
+{% endblock %}

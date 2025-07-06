@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Editar: {{ nota.titulo }} - Mis Notas{% endblock %}
+
+{% block content %}
+<h2>✏️ Editar Nota</h2>
+
+<form method="POST">
+    <div class="form-group">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" value="{{ nota.titulo }}" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="contenido">Contenido:</label>
+        <textarea id="contenido" name="contenido" required>{{ nota.contenido }}</textarea>
+    </div>
+    
+    <div>
+        <button type="submit" class="btn btn-primary">💾 Guardar Cambios</button>
+        <a href="{{ url_for('ver_nota', nota_id=nota.id) }}" class="btn" style="background-color: #6c757d; color: white;">❌ Cancelar</a>
+    </div>
+</form>
+{% endblock %}
