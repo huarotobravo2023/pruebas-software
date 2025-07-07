@@ -9,6 +9,12 @@ app.secret_key = 'tu_clave_secreta_aqui'
 # Base de datos SQLite
 DATABASE = 'notas.db'
 
+# Inicializar la base de datos al importar el módulo
+def ensure_db():
+    """Asegura que la base de datos existe"""
+    if not os.path.exists(DATABASE):
+        init_db()
+
 def init_db():
     """Inicializa la base de datos SQLite"""
     conn = sqlite3.connect(DATABASE)
@@ -32,6 +38,8 @@ def get_db_connection():
 
 def cargar_notas():
     """Carga todas las notas desde la base de datos"""
+    # Asegurar que la base de datos existe antes de hacer consultas
+    init_db()
     conn = get_db_connection()
     notas = conn.execute('SELECT * FROM notas ORDER BY id DESC').fetchall()
     conn.close()
@@ -139,3 +147,6 @@ if __name__ == '__main__':
     # Inicializar la base de datos al arrancar
     init_db()
     app.run(debug=True)
+else:
+    # Asegurar que la base de datos existe cuando se ejecuta con gunicorn
+    ensure_db()
